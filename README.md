@@ -53,12 +53,23 @@ A dedicated space to track your tasks, deadlines, and project progress.
    ```bash
    flutter pub get
    ```
-3. **Configure API Keys**:
-   Open `lib/services/api_service.dart` and add your **Gemini API Key**.
+3. **🔑 API Configuration**:
+   Acad Helper requires a Gemini API key to power its AI features.
+   - Go to [Google AI Studio](https://aistudio.google.com/app/apikey) and generate a new API key.
+   - Inside `frontend/lib/services/`, create a file named `api_key.dart`.
+   - Copy the content from `api_key.dart.example` and paste your key:
+     ```dart
+     const String geminiApiKey = "YOUR_ACTUAL_API_KEY_HERE";
+     ```
 4. **Run the App**:
    ```bash
    flutter run
    ```
+
+---
+
+## 🔒 Security Note
+The `api_key.dart` file is included in `.gitignore` to prevent your secret keys from being exposed on GitHub. **Never commit your actual API keys to a public repository.**
 
 ---
 

@@ -1,11 +1,10 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
 import '../models/response_model.dart';
+import 'api_key.dart';
 
 class ApiService {
-  static const String geminiApiKey = "AIzaSyBtDkZezg8lUraCairkdA885Qrp6YReqlI";
-
   Future<String?> summarizeText(String rawText) async {
-    if (geminiApiKey == "YOUR_GEMINI_API_KEY") {
+    if (geminiApiKey == "YOUR_GEMINI_API_KEY_HERE") {
       return "Please set your Gemini API Key in api_service.dart to get real AI summaries!";
     }
 
