@@ -9,7 +9,7 @@ class ApiService {
     }
 
     try {
-      final model = GenerativeModel(model: 'gemini-1.5-flash', apiKey: geminiApiKey);
+      final model = GenerativeModel(model: 'gemini-1.5-flash-latest', apiKey: geminiApiKey);
       final prompt = "Summarize this document text concisely:\n\n$rawText";
       final response = await model.generateContent([Content.text(prompt)]);
       return response.text;

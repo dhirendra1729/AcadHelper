@@ -84,84 +84,88 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
           ),
         ],
       ),
-      body: Row(
-        children: [
-          Container(
-            width: 250,
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1B263B).withOpacity(0.5),
-              border: const Border(right: BorderSide(color: Colors.white10)),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Row(
-                  children: [
-                    Icon(Icons.code, color: Color(0xFF00ADB5), size: 18),
-                    SizedBox(width: 8),
-                    Text(
-                      "Language",
-                      style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF0D1B2A),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.white12),
-                  ),
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton<String>(
-                      isExpanded: true,
-                      value: _selectedLanguage,
-                      dropdownColor: const Color(0xFF1B263B),
-                      style: const TextStyle(color: Colors.white),
-                      items: _languages.map((lang) {
-                        return DropdownMenuItem(value: lang, child: Text(lang));
-                      }).toList(),
-                      onChanged: (val) {
-                        if (val != null) setState(() => _selectedLanguage = val);
-                      },
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 30),
-                Container(
-                  padding: const EdgeInsets.all(12),
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF00ADB5).withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: const Color(0xFF00ADB5).withOpacity(0.3)),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Top Selection Panel (Formerly Sidebar)
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: const Color(0xFF1B263B).withOpacity(0.5),
+                border: const Border(bottom: BorderSide(color: Colors.white10)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Row(
                     children: [
-                      const Text(
-                        "Selected:",
-                        style: TextStyle(color: Color(0xFF00ADB5), fontWeight: FontWeight.bold, fontSize: 12),
-                      ),
+                      Icon(Icons.code, color: Color(0xFF00ADB5), size: 18),
+                      SizedBox(width: 8),
                       Text(
-                        _selectedLanguage,
-                        style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                        "Language Selector",
+                        style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(height: 40),
-                const Text(
-                  "Quick Questions:",
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
-                ),
-                const SizedBox(height: 12),
-                ..._quickQuestions.map((q) => Padding(
-                  padding: const EdgeInsets.only(bottom: 8.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: OutlinedButton(
+                  const SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF0D1B2A),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.white12),
+                          ),
+                          child: DropdownButtonHideUnderline(
+                            child: DropdownButton<String>(
+                              isExpanded: true,
+                              value: _selectedLanguage,
+                              dropdownColor: const Color(0xFF1B263B),
+                              style: const TextStyle(color: Colors.white),
+                              items: _languages.map((lang) {
+                                return DropdownMenuItem(value: lang, child: Text(lang));
+                              }).toList(),
+                              onChanged: (val) {
+                                if (val != null) setState(() => _selectedLanguage = val);
+                              },
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF00ADB5).withOpacity(0.1),
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: const Color(0xFF00ADB5).withOpacity(0.3)),
+                          ),
+                          child: Center(
+                            child: Text(
+                              _selectedLanguage,
+                              style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 12),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 24),
+                  const Text(
+                    "Quick Questions:",
+                    style: TextStyle(color: Colors.white54, fontSize: 12),
+                  ),
+                  const SizedBox(height: 12),
+                  Wrap(
+                    spacing: 8,
+                    runSpacing: 8,
+                    children: _quickQuestions.map((q) => OutlinedButton(
                       onPressed: () {
                         _questionController.text = q;
                         _askQuestion(q);
@@ -169,20 +173,18 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
                       style: OutlinedButton.styleFrom(
                         foregroundColor: Colors.white70,
                         side: const BorderSide(color: Colors.white12),
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-                        alignment: Alignment.centerLeft,
+                        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
                       ),
                       child: Text(q, style: const TextStyle(fontSize: 12)),
-                    ),
+                    )).toList(),
                   ),
-                )),
-              ],
+                ],
+              ),
             ),
-          ),
-          
-          Expanded(
-            child: Padding(
+            
+            // Interaction Panel
+            Padding(
               padding: const EdgeInsets.all(24.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -215,22 +217,21 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
                         ),
                       ),
                       const SizedBox(width: 12),
-                      ElevatedButton.icon(
+                      ElevatedButton(
                         onPressed: _isLoading ? null : () => _askQuestion(_questionController.text),
-                        icon: const Icon(Icons.send, size: 18),
-                        label: const Text("Ask"),
                         style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xFF00ADB5),
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 18),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
                           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                         ),
+                        child: const Icon(Icons.send, size: 18),
                       ),
                     ],
                   ),
                   const SizedBox(height: 8),
                   const Text(
-                    "Press Enter to send • Examples: \"How do I sort an array?\", \"Explain async/await\", \"Debug this error\"",
+                    "Examples: \"How do I sort an array?\", \"Explain async/await\"",
                     style: TextStyle(color: Colors.white38, fontSize: 11),
                   ),
                   const SizedBox(height: 30),
@@ -239,47 +240,49 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
                     style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 20),
-                  Expanded(
-                    child: Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF1B263B),
-                        borderRadius: BorderRadius.circular(16),
-                        border: Border.all(color: Colors.white12),
-                      ),
-                      child: _isLoading
-                          ? const Center(child: CircularProgressIndicator(color: Color(0xFF00ADB5)))
-                          : _aiResponse == null
-                              ? const Center(
+                  Container(
+                    width: double.infinity,
+                    constraints: const BoxConstraints(minHeight: 200),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1B263B),
+                      borderRadius: BorderRadius.circular(16),
+                      border: Border.all(color: Colors.white12),
+                    ),
+                    child: _isLoading
+                        ? const Padding(
+                            padding: EdgeInsets.all(40.0),
+                            child: Center(child: CircularProgressIndicator(color: Color(0xFF00ADB5))),
+                          )
+                        : _aiResponse == null
+                            ? const Padding(
+                                padding: EdgeInsets.all(40.0),
+                                child: Center(
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Icon(Icons.code, size: 64, color: Colors.white12),
+                                      Icon(Icons.code, size: 48, color: Colors.white12),
                                       SizedBox(height: 16),
                                       Text(
                                         "Ask a coding question to get started",
-                                        style: TextStyle(color: Colors.white24, fontSize: 16),
-                                      ),
-                                      Text(
-                                        "Get help with debugging, syntax, best practices, and more",
-                                        style: TextStyle(color: Colors.white12, fontSize: 12),
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(color: Colors.white24, fontSize: 14),
                                       ),
                                     ],
                                   ),
-                                )
-                              : SingleChildScrollView(
-                                  padding: const EdgeInsets.all(20),
-                                  child: SelectableText(
-                                    _aiResponse!,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'monospace',
-                                      fontSize: 14,
-                                      height: 1.5,
-                                    ),
+                                ),
+                              )
+                            : Padding(
+                                padding: const EdgeInsets.all(20),
+                                child: SelectableText(
+                                  _aiResponse!,
+                                  style: const TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'monospace',
+                                    fontSize: 13,
+                                    height: 1.5,
                                   ),
                                 ),
-                    ),
+                              ),
                   ),
                   const SizedBox(height: 24),
                   
@@ -300,15 +303,14 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
                         const SizedBox(height: 8),
                         _buildTip("Be specific about what you're trying to achieve"),
                         _buildTip("Mention any error messages you're seeing"),
-                        _buildTip("Include a small code snippet if relevant"),
                       ],
                     ),
                   ),
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -317,9 +319,12 @@ class _CodeHelpScreenState extends State<CodeHelpScreen> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Text("• ", style: TextStyle(color: Colors.white38)),
-          Text(text, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+          Expanded(
+            child: Text(text, style: const TextStyle(color: Colors.white54, fontSize: 12)),
+          ),
         ],
       ),
     );
