@@ -3,11 +3,17 @@ import 'screens/home_screen.dart';
 
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   
   try {
+    await dotenv.load(fileName: ".env");
+    print("Environment variables loaded");
+  } catch (e) {
+    print("Could not load .env file: $e");
+  }
     await Firebase.initializeApp();
     print("Firebase initialized successfully");
   } catch (e) {

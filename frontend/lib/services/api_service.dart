@@ -1,11 +1,13 @@
 import 'package:google_generative_ai/google_generative_ai.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import '../models/response_model.dart';
-import 'api_key.dart';
 
 class ApiService {
   Future<String?> summarizeText(String rawText) async {
-    if (geminiApiKey == "YOUR_GEMINI_API_KEY_HERE") {
-      return "Please set your Gemini API Key in api_service.dart to get real AI summaries!";
+    final geminiApiKey = dotenv.env['GEMINI_API_KEY'];
+    
+    if (geminiApiKey == null || geminiApiKey.isEmpty) {
+      return "Please set your Gemini API Key in .env file to get real AI summaries!";
     }
 
     try {
