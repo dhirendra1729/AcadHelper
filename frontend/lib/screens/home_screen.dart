@@ -33,10 +33,10 @@ class HomeScreen extends StatelessWidget {
                 child: GridView.count(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  crossAxisCount: 4,
+                  crossAxisCount: 3,
                   crossAxisSpacing: 15,
                   mainAxisSpacing: 15,
-                  childAspectRatio: 1.2,
+                  childAspectRatio: 1.1,
                   children: [
                     _buildNavCard(
                       context,
@@ -67,13 +67,6 @@ class HomeScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(builder: (context) => const CodeHelpScreen()),
                       ),
-                    ),
-                    _buildNavCard(
-                      context,
-                      'ASSIGNMENTS',
-                      Icons.assignment,
-                      const Color(0xFF00A896),
-                      () {}, // Skipping as per user request
                     ),
                   ],
                 ),
